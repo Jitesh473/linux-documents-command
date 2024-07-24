@@ -1,0 +1,26 @@
+  435  sudo reboot
+  436  sudo apt-get autoclean
+  437  sudo apt-get autoremove
+  438  sudo apt-get clean
+  439  sudo apt  get update
+  440  sudo apt get update
+  441  sudo apt update
+  442  sudo apt upgrade
+  443  sudo apt install -y isc-dhcp-server
+  444  sudo vi /etc/default/isc-dhcp-server
+  445  sudo systemctl status apache2
+  446  sudo systemctl status nginx -t
+  447  sudo systemctl status nginx
+  448  sudo apt install nginx 
+  449  ufw status
+  450  sudo ufw status
+  451  sudo systemctl status nginx 
+  452  ifconfigure
+  453  ifconfig
+  454  ls
+  455  cd /var/www//html/
+  456  ls
+  457  ll
+  458  sudo su
+  459  cd
+  460  history

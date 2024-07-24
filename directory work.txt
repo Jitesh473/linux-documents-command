@@ -1,0 +1,8 @@
+Directories	Description
+ /bin	 binary or executable programs.
+/etc	system configuration files.
+/home	home directory. It is the default current directory.
+/opt	optional or third-party software.
+/tmp	temporary space, typically cleared on reboot.
+/usr	 User related programs.
+/var 	log files.

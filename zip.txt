@@ -1,0 +1,7 @@
+file size decrese = gzip filename
+file size normal = gunzip filename
+show all folder file = tar cvf archive.tar folder name
+folder size = gzip jo nnam aya h vo
+decompose file = tar xvf archive.tar.gz
+show content of file = tar -tf achive.tar.g
+folder tar and extract = tar -zcvf archive foldername

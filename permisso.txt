@@ -1,0 +1,5 @@
+  path = /home/documents
+   browsable = yes
+   writable = yes
+   guest = ok
+   read only = no

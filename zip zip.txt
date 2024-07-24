@@ -1,0 +1,7 @@
+sudo zip -r abc dir0/ for compress file
+sudo unzip -d abc.zip dir2/ location change
+sudo unzip l abc.zip for check files
+sudo zip -d abc.zip * mp3 for specific file delte
+ zip -r MyFolder.zip MyFolder
+$ zip -r archivefolder.zip MyFolder1 MyFolder2 file1.txt file2.txt
+rm -rf temporary_directory/your_folder

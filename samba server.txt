@@ -1,0 +1,17 @@
+   69   yum remove nfs-utils.service
+   70  dnf install samba samba-client samba-common
+   71   systemctl start smb
+   72   systemctl enable smb
+   73   systemctl status smb
+   74   sudo firewall-cmd --permanent --add-service=samba
+   75  sudo firewall-cmd --reload
+   76   cp /etc/samba/smb.conf /etc/samba/smb.conf.orig
+   77   mkdir -p /srv/samba/anonymous
+   78  chmod -R 0777 /srv/samba/anonymous
+   79   chown -R nobody:nobody /srv/samba/anonymous
+   80   chcon -t samba_share_t /srv/samba/anonymous
+   81   vim /etc/samba/smb.conf
+   82   nano /etc/samba/smb.conf
+   83   testparm 
+   84* 
+   85  ifconfig

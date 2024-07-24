@@ -1,0 +1,3 @@
+pwck check for error code user passwd file
+gpwck check for error code group passwd file
+nano /etc/sudoers

@@ -1,0 +1,7 @@
+sudo apt install madadm
+fdisk -l
+select drive 
+create partition 
+fd code for raid
+sudo mdadm --create /dev/mdo --level=mirror --raid-devices=2 /dev/sdb1 /dev/sdc1
+sudo mdadm --detail /dev/md0

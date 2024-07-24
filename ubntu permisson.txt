@@ -1,0 +1,5 @@
+Number	Permission	Description
+1	--x	Execute only
+2	-w-	Write only
+3 (i.e. 2+1)	-wx	Write and execute only
+4	r--	Read-only

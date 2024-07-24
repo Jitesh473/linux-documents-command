@@ -1,0 +1,12 @@
+zip.
+tar.
+tar.gz.
+tar.bz2.
+Conclusion.
+
+-r ka mtlb bhut si file ik hi ma dalni h
+-d ka mtlb location change krni h directory ki
+unzip -l abc.zip command for check all extract files
+zip -d abc.zip * 11 = for specific file delte file
+sudo unzip abc.zip -d /dir6 = for change location
+zip -r abc dir0/

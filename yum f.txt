@@ -1,0 +1,15 @@
+  18  sudo yum install firewalld -y
+   19  sudo systemctl start firewalld
+   20  sudo systemctl enable firewalld
+   21  sudo firewall-cmd --get default zone
+   22  sudo firewall-cmd --get default-zone
+   23  sudo firewall-cmd --get-default-zone
+   24  sudo firewall-cmd --permanent --add-service=http
+   25  sudo firewall-cmd --permanent --add-service=https
+   26  sudo firewall-cmd --reload
+   27  sudo firewall-cmd --list services
+   28  sudo firewall-cmd --permanent --ad-port=8080/tcp
+   29  sudo firewall-cmd --permanent --add-port=8080/tcp
+   30  sudo firewall-cmd --reload
+   31  sudo status firewalld
+   32  sudo systemctl status firewalld

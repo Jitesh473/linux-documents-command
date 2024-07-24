@@ -1,0 +1,2 @@
+ext4 file system = 16 tebibytes (TiB) in size on a file 
+ext4 file system = y 4 billion (2^32) files on a single file system. on a file 

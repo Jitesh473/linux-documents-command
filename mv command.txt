@@ -1,0 +1,9 @@
+-i agar folder m file h tu usi naam sa dubara file dalna chahta ho tu vo puchaga dala ya nhi
+-f agar folder m file ha tu usi name ki same file ko forcefully folder m dall daga
+-v dispaly all content 
+-u update
+-n -n ka istmal jab krna ha jab ik hi file ko dubara kisi directory ya file ma na dalna ho tu 
+-f forcefully work
+--backup use for file backup
+-
+-T target file

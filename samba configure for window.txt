@@ -1,0 +1,33 @@
+   1  sudo yum install samba-common samba-client -y
+    2  cp /etc/samba/smb.conf /etc/samba/smb.conf.default
+    3  mkdir -p /srv/samba/anonymous
+    4  chmod -R 0755 /srv/samba/anonymous
+    5  ls -ldZ /srv/samba/
+    6  chcon -t samba_share_t /srv/samba/anonymous
+    7  ls -ldZ /srv/samba/
+    8  chcon -t samba_share_t /srv/samba/
+    9  ls -ldZ /srv/samba/
+   10  clear
+   11  ls -ldZ /srv/samba/
+   12  sudo systemctl status SElinux
+   13  sudo systemctl status SE linux
+   14  nano /etc/samba/smb.conf
+   15  testparm
+   16  nano /etc/samba/smb.conf
+   17  testparm
+   18  vim /etc/samba/smb.conf
+   19  cd /srv/samba/anonymous/
+   20  touch test.txt
+   21  cal > cal.txt
+   22  firewall -cmd --add-service --permanent=mountd
+   23  firewall -cmd --permanent --add-service=mountd
+   24  firewall -cmd --permanent --add -service=mountd
+   25  firewall-cmd --permanent --add-service=mountd
+   26  firewall-cmd --reload
+   27  cd
+   28  history
+[root@localhost ~]# cd
+
+
+
+

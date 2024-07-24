@@ -1,0 +1,27 @@
+sudo yum install openssh-server
+2. Start and Enable SSH Service:
+Start the SSH service and enable it to start automatically upon system boot:
+
+bash
+Copy code
+sudo systemctl start sshd
+sudo systemctl enable sshd
+3. Configure Firewall (if necessary):
+If a firewall is enabled on the remote system, ensure that it allows SSH connections. You can open the SSH port (default is 22) using firewalld:
+
+bash
+Copy code
+sudo firewall-cmd --permanent --add-service=ssh
+sudo firewall-cmd --reload
+4. Remote Access using SSH:
+From your local machine or another system, use the ssh command to establish a remote SSH connection to the target system:
+
+bash
+Copy code
+ssh username@remote_ip_address
+Replace username with a valid user account on the remote system and remote_ip_address with the IP address or hostname of the remote system. You'll be prompted to enter the password for the specified user.
+
+5. Manage Packages using YUM:
+Once you've established an SSH connection to the remote system, you can use yum commands to manage packages, install software, update packages, etc. For example:
+
+Update package cache and list available u

@@ -1,0 +1,30 @@
+525  sudo delgroup sgx
+  526  getent group
+  527  sudo delgroup kmlash
+  528  getent group
+  529  sudo uermod -aG staff kk
+  530  sudo usermod -aG amrit amit
+  531  sudo usermod -aG kesshav amit
+  532  sudo delete
+  533  history/
+  534  history
+  535  ls -l
+  536  sudo chmod g+rw rohit
+  537  ls -l
+  538  rmdir rohit
+  539  rm ok
+  540  rm kp.xt
+  541*
+  542  sudo addgroup rmn
+  543  sudo usermod -aG rmn amn
+  544  getent group
+  545  sudo delgroup mnika
+  546  getent group
+  547  sudo get install
+  548  sudo apt install facebook
+  549  sudo apt remove facebook
+  550  sudo apt remove --purge facebook
+  551  e:
+  552  sudo apt remove --purge facebook
+  553  history
+ubuntu@DESKTOP-A67IQ1M:~$

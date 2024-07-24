@@ -1,0 +1,7 @@
+User IDs below 1000 are typically reserved for system accounts and special purposes.
+User IDs starting from 1000 are typically assigned to regular user accounts created by the system administrator or users themselves.
+User IDs are important for maintaining security and managing file permissions on the system. Each file and process on the system is associated with a specific user ID, allowing the system to control access to resources based on user privileges.
+
+To view the User ID associated with a particular user account in Ubuntu, you can use the id command followed by the username. For example:
+
+bash

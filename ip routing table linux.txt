@@ -1,0 +1,87 @@
+
+IP addressing and routing are fundamental concepts in networking. Here's a brief overview and some commands related to each:
+
+IP Addressing:
+Viewing IP Address Configuration:
+
+Windows:
+bash
+Copy code
+ipconfig
+Linux:
+bash
+Copy code
+ifconfig      # Older systems
+or
+bash
+Copy code
+ip addr show  # Newer systems
+Setting Static IP Address:
+
+Windows:
+bash
+Copy code
+netsh interface ip set address "Local Area Connection" static [IP_ADDRESS] [SUBNET_MASK] [GATEWAY]
+Linux:
+bash
+Copy code
+sudo nano /etc/network/interfaces
+Add or modify the lines:
+scss
+Copy code
+auto eth0
+iface eth0 inet static
+    address [IP_ADDRESS]
+    netmask [SUBNET_MASK]
+    gateway [GATEWAY]
+Routing:
+Viewing Routing Table:
+
+Windows:
+bash
+Copy code
+route print
+Linux:
+bash
+Copy code
+route -n       # Older systems
+or
+bash
+Copy code
+ip route show  # Newer systems
+Adding a Static Route:
+
+Windows:
+bash
+Copy code
+route add [DESTINATION_NETWORK] mask [SUBNET_MASK] [GATEWAY]
+Linux:
+bash
+Copy code
+sudo ip route add [DESTINATION_NETWORK]/[SUBNET_MASK] via [GATEWAY]
+Deleting a Static Route:
+
+Windows:
+bash
+Copy code
+route delete [DESTINATION_NETWORK]
+Linux:
+bash
+Copy code
+sudo ip route del [DESTINATION_NETWORK]/[SUBNET_MASK]
+General Routing Commands:
+Ping (to check connectivity):
+
+bash
+Copy code
+ping [DESTINATION_IP_OR_HOSTNAME]
+Traceroute (to trace the path packets take):
+
+Windows:
+bash
+Copy code
+tracert [DESTINATION_IP_OR_HOSTNAME]
+Linux:
+bash
+Copy code
+traceroute [DESTINATION_IP_OR_HOSTNAME]

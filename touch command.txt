@@ -1,0 +1,4 @@
+-a = file acess time change command 
+touch -m file.txt = modifaction of file 
+check modification file command = stat filename
+-f used for error free msg make file

@@ -1,0 +1,8 @@
+When trying to unmounting it is not unmounting, how to troubleshoot this one?
+Some times directory reflects error while unmounting because,
+(i) you are in the same directory and trying to unmount it, check with # pwdcommand.
+(ii) some users are present or accessing the same directory and using the contents in it, check this with
+# fuser -cu <device name> (to check the users who are accessing that partition)
+# lsof <device name> (to check the files which are open in that mount point)
+# fuser -ck <opened file name with path> (to kill that opened files)
+Now we can unmount that partition using # umount <mount point>

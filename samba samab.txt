@@ -1,0 +1,92 @@
+yum install samba samba-common samba-client -y
+ 
+Before configurations, make sure Windows machine is in same workgroup.
+open the cmd prompt in Windows machine and run the following command
+
+net config workstation
+ 
+Samba Configuration
+before configuration rename samba default configuration file /etc/samba/smb.conf as backup.
+
+cp /etc/samba/smb.conf /etc/samba/smb.conf.default
+ 
+Samba Anonymous File Sharing
+Now create a shared folder on the server where all files/folders will be stored and set appropriate permissions on it and allow SELINUX for the samba configuration.
+
+Run below commands
+
+mkdir -p /srv/samba/anonymous
+chmod -R 0755 /srv/samba/anonymous
+chown -R nobody:nobody /srv/samba/anonymous
+chcon -t samba_share_t /srv/samba/anonymous
+ 
+Now make following changes in new samba configuration file.
+vim /etc/samba/smb.conf
+[global]
+workgroup = WORKGROUP
+server string = Samba Server %v
+netbios name = rhel8
+security = user
+map to guest = bad user
+dns proxy = no
+
+[Anonymous]
+path = /srv/samba/anonymous
+browsable =yes
+writable = yes
+guest ok = yes
+read only = no
+ 
+Run below commant to verify samba configurations
+
+testparm
+ 
+Start and Add Samba Services in firewall
+Run below command to add samba service in firewall
+
+firewall-cmd --permanent --add-service=samba
+firewall-cmd --reload
+ 
+start and enable samba services
+
+systemctl start smb.service
+systemctl enable smb.service
+systemctl start nmb.service
+systemctl enable nmb.service
+ 
+Access Samba Share Path
+Now open Run prompt by pressing win + r key on your keyboard then type \\rhel8 and press enter key.
+ 
+You will see Anonymous folder like below
+ 
+Now you can add files/folders in this folder to share with other users.
+ 
+Create samba secure share 
+Create a secured share on the server where only allowed user can login and set appropriate permissions on it and allow SELINUX for the samba configuration.
+
+Create group for samba users
+groupadd securedgroup
+Create samba user with securedgroup
+useradd demo -G securedgroup
+ 
+Now create secure share folder for samba users and set necessary permissions.
+mkdir -p /srv/samba/secured
+chmod -R 0770 /srv/samba/secured
+chcon -t samba_share_t /srv/samba/secured
+chown -R root:securedgroup /srv/samba/secured/
+ 
+ 
+Add user to samba database and set its password
+smbpasswd -a demo
+
+Now add following lines in samba configuration file.
+vim /etc/samba/smb.conf
+[secured]
+path = /srv/samba/secured
+valid users = @securedgroup
+guest ok = no
+writable = yes
+browsable = yes
+ 
+Then restart samba
+systemctl restart smb.service

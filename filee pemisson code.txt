@@ -1,0 +1,22 @@
+chmod 100 filename
+Here, 100 means:
+
+1: Execute permission for the owner.
+0: No permissions for the group.
+0: No permissions for others.chmod 400 filename
+Here, 400 means:
+
+4: Read permission for the owner.
+0: No permissions for the group.
+0: No permissions for others.chmod 700 filename
+To set read and write permissions for the owner, read-only for the group and others (644 = 4 (read) + 2 (write) for owner, 4 (read) for group and others):
+
+bash
+Copy code
+chmod 644 filename
+Notes:
+Understanding Numerical Values:
+
+4 stands for Read (r)
+2 stands for Write (w)
+1 stands for Execute (x)

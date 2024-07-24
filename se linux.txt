@@ -1,0 +1,39 @@
+
+SELinux (Security-Enhanced Linux) is a security feature in Red Hat-based Linux distributions that provides a mandatory access control (MAC) mechanism to enhance the system's security. The SELinux configuration is typically stored in the /etc/selinux/config file.
+
+To configure SELinux on Red Hat-based systems, follow these steps:
+
+Check Current SELinux Status:
+Open a terminal and run the following command to check the current status of SELinux:
+
+bash
+Copy code
+sestatus
+Edit SELinux Configuration:
+Open the SELinux configuration file /etc/selinux/config in a text editor. You may use a command-line text editor like vi or nano. For example:
+
+bash
+Copy code
+sudo vi /etc/selinux/config
+Adjust SELinux Mode:
+In the configuration file, find the line that begins with SELINUX=. There are three possible values for this setting:
+
+enforcing: SELinux is fully active and enforcing security policies.
+permissive: SELinux is active but only generates log messages and does not enforce policies.
+disabled: SELinux is completely disabled.
+Choose the appropriate mode and update the line accordingly. For example, to set SELinux to enforcing mode:
+
+makefile
+Copy code
+SELINUX=enforcing
+Configure SELinux Policy:
+There is another line in the configuration file that specifies the SELinux policy. The default policy is usually targeted, but you can change it if needed:
+
+makefile
+Copy code
+SELINUXTYPE=targeted
+Save and Exit:
+Save the changes and exit the text editor.
+
+Reboot the System:
+After modifying the SELinux configuration, it is recommended to reboot th

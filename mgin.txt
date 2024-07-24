@@ -1,0 +1,7 @@
+ sudo systemctl reboot
+  563  sudo nano /etc/nginx/sites-enabled/default
+  564  sudo nginx -t
+  565  sudo systemctl status nginx
+  566  sudo systemctl reboot nginx
+  567  sudo systemctl status nginx
+  568  sudo systemctl status apache2

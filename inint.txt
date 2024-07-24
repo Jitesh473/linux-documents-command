@@ -1,0 +1,196 @@
+  Cart
+Log In
+CommunityBlog Events Webinars Tutorials Forum
+Search
+Community  Blog  Understanding and Changing Runlevels in Systemd
+Understanding and Changing Runlevels in Systemd
+Alibaba Clouder March 7, 2019  26,714 0
+In this article, we will explore how to manage runlevels in a systemd-based Linux server.
+By Alain Francois, Alibaba Cloud Tech Share Author. Tech Share is Alibaba Cloud's incentive program to encourage the sharing of technical knowledge and best practices within the cloud community.
+
+Linux systems have used a system initialization process from the UNIX SysV standard. The init daemon runs a series of scripts to start other daemons on the system to provide system services and also allow users to log in and use the system. Because the init daemon often has to manage several daemons at once, it categorizes the system into runlevels. Runlevels are an old traditional way to start and stop groups of services used in SysV init.
+
+However, the recent Linux distributions have adopted a new system initialization process known as Systemd. Systemd is completely compatible with the UNIX SysV standard yet implements new features for managing all system devices, including Linux kernel modules, daemons, and network sockets. It uses targets instead of runlevels and provides a compatibility layer that maps runlevels to targets, and associated binaries like runlevel. Each target has a unique name, and multiple targets can be active at one time. In this article we will talk about runlevels in SysV and Systemd, then their modification in each context.
+
+Understanding the Initialization Process
+The original Linux init program was based on the Unix System V init program, and it became commonly called SysV. The SysV init program uses a series of shell scripts, divided into separate runlevels, to determine what programs run at what times. Each program uses a separate shell script to start and stop the program. Furthermore, the init daemon is responsible for starting and stopping daemons after system initialization.
+
+The system administrator sets the runlevel in which the Linux system starts, which in turn determines which set of programs is running and can also change the runlevel at any time while the system is running. The system boot process is considered complete when all the enabled services are operational for the boot target and users are able to log in to the system. There are currently three popular initialization process methods used in Linux distributions:
+
+Unix System V also called SysV
+Upstart
+Systemd
+What Is Systemd?
+Systemd for system daemon is the newest system initializing for the SysVinit model replacing both init and Upstart that is responsible for starting all kinds of things in new Linux distributions. It has fast-tracked system initialization and state transitioning by introducing parallel processing of startup scripts, improved handling of service dependencies, and an on-demand activation of service daemons using sockets and D-Bus. The systemd initialization process introduced a major paradigm shift in how Linux systems handle services.
+
+Instead of using shell scripts and runlevels, the systemd method uses units and targets. A systemd unit defines a service or action on the system which consists of a name, a type, and a configuration file while a systemd target represents a different group of services that should be running on the system.
+
+Runlevels Explained
+A runlevel is essentially a set of capabilities or running services that you can pre-define and set the system to boot to so you have a predictable set of services. It defines the number and type of daemons that are loaded into memory and executed by the kernel on a particular system. Because the init daemon often has to manage several daemons at once, the init daemon categorizes the system into runlevels.
+
+The Different Runlevels
+In SysVinit systems, you had a defined but configurable set of runlevels numbered from 0 to 6. The init program uses a series of shell scripts, divided into separate runlevels, to determine what programs run at what times:
+
+The S and s are synonymous with runlevel 1 as far as many utilities are concerned
+Runlevels 0, 1, and 6 are reserved for special purposes
+The remaining runlevels are available for whatever purposes you can decide
+You can see below a detailed description of runlevels in Sys V:
+
+Runlevel 0 or Halt is used to shift the computer from one state to another. It shut down the system.
+Runlevel 1, s, S or Single-User Mode is used for administrative and recovery functions. It has only enough daemons to allow one user (the root user) to log in and perform system maintenance tasks. All local file systems are mounted. Some essential services are started, but networking remains disabled.
+Runlevel 2 or Multi-user Mode is used for most daemons running and allows multiple users the ability to log in and use system services but without networking. On Debian and its derivatives, a full multi-user mode with X running and a graphical login. Most other distributions leave this runlevel undefined.
+Runlevel 3 or Extended Multi-user Mode is used for a full multi-user mode with a console (without GUI) login screen with network services available
+Runlevel 4 is not normally used and undefined so it can be used for a personal customization
+Runlevel 5 or Graphical Mode is same as Runlevel 3 with graphical login _(such as GDN)_.
+Runlevel 6 or Reboot is a transitional runlevel to reboot the system.
+Changing Runlevels
+It is possible to see the current runlevel on the system with the command runlevel. It also shows the previous runlevel and you can know if the runlevel have been changed since the last system startup.
+
+$ runlevel
+N 5
+The N stands for none, meaning there has been no run level changed since powering up. To change the runlevel, you use the telinit command. For example, we will set the runlevel 3.
+
+$ sudo telinit 3
+When you change the runlevel, the command is applied directly so the system will reboot with the new runlevel in command mode. If you check the current runlevel, you will see the previous and the new one
+
+$ runlevel
+5 3
+Don't configure your default runlevel to 0 (shutdown) or 6 (reboot). If you do, your system will immediately shutdown or reboot once it finishes powering up. Also make sure to don't use the telinit command to shutdown or reboot your system because it can make your users lost their work so, use the shutdown command instead.
+
+Target in Systemd
+In systemd, targets are the new runlevels. Targets are simply logical collections of units. They are a special systemd unit type with the .target file extension. A systemd target defines the state a system should be in, and the processes and services that should be started to get into that state.
+
+The Different Targets
+Some targets are equivalent to SysVinit runlevels; however, they are named rather than numbered and we can quote :
+
+poweroff.target (runlevel 0): shutdown and power off the system
+rescue.target (runlevel 1): launch the rescue shell session
+multi-user.target (runlevel 2,3,4): set the system in non graphical (console) multi-user system
+graphical.target (runlevel 5): use a graphical multi-user system with network services
+reboot.target (runlevel 6): shutdown and reboot the system
+Changing a Target
+You can list the currently loaded targets units and see all the those which are loaded and activated.
+
+$ systemctl list-units --type target
+    UNIT                   LOAD   ACTIVE SUB    DESCRIPTION                  
+    basic.target           loaded active active Basic System                 
+    cryptsetup.target      loaded active active Local Encrypted Volumes      
+    getty.target           loaded active active Login Prompts                
+    graphical.target       loaded active active Graphical Interface          
+    local-fs-pre.target    loaded active active Local File Systems (Pre)     
+    local-fs.target        loaded active active Local File Systems           
+    multi-user.target      loaded active active Multi-User System            
+    network-online.target  loaded active active Network is Online            
+    network.target         loaded active active Network                      
+    nss-lookup.target      loaded active active Host and Network Name Lookups
+    nss-user-lookup.target loaded active active User and Group Name Lookups  
+    paths.target           loaded active active Paths                        
+    remote-fs.target       loaded active active Remote File Systems          
+    slices.target          loaded active active Slices                       
+    sockets.target         loaded active active Sockets                      
+    sound.target           loaded active active Sound Card                   
+    swap.target            loaded active active Swap                         
+    sysinit.target         loaded active active System Initialization        
+    time-sync.target       loaded active active System Time Synchronized     
+    timers.target          loaded active active Timers                       
+    
+    LOAD   = Reflects whether the unit definition was properly loaded.
+    ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+    SUB    = The low-level unit activation state, values depend on unit type.
+    
+    20 loaded units listed. Pass --all to see loaded but inactive units, too.
+    To show all installed unit files use 'systemctl list-unit-files'.
+You can change the current target with the isolate option. Remember that the system will directly apply the change by rebooting
+
+$ sudo systemctl isolate multi-user.target
+After the reboot, you can check all the target with --all option and you will see that the graphical.target is not activated on the last line of our output.
+
+$ systemctl list-units --type target --all 
+      UNIT                   LOAD      ACTIVE   SUB    DESCRIPTION                  
+    ● all.target             not-found inactive dead   all.target                   
+      basic.target           loaded    active   active Basic System                 
+      cryptsetup.target      loaded    active   active Local Encrypted Volumes      
+      emergency.target       loaded    inactive dead   Emergency Mode               
+      getty-pre.target       loaded    inactive dead   Login Prompts (Pre)          
+      getty.target           loaded    active   active Login Prompts                
+      graphical.target       loaded    inactive dead   Graphical Interface   
+Notice that we have the default target which is different to the currently loaded target. It is the one on which the system will always start up. It means that the current target can be the multi-user.target for a precise task while the default target can be rescue.target or vice-versa.
+
+The default target is specified by the file /etc/systemd/system/default.target and is a link to a target file in the /lib/systemd/system folder. You can use the systemctl get-default command to determine
+the default target. We can check it while we are currently in multi-user.target for our example above
+
+$ systemctl get-default
+graphical.target
+If you reboot, the system will naturally boot on your default graphical mode. You can change the default target with
+
+$ sudo systemctl set-default rescue.target
+Created symlink /etc/systemd/system/default.target → /lib/systemd/system/rescue.target.
+Now if you reboot, you will see a message indicating that you are in rescue mode and the default user in rescue will be root.
+
+Systemd is now set by default with many popular Linux distributions such as Ubuntu 15.04, Mandriva, Debian 8, Mageia, Arch Linux, CentOS 7, RHEL 7.0. It's considered more efficient and parallel in operation than SysVinit and can dramatically reduce system startup times.
+
+Linux Computing Tech Share Runlevel Systemd
+Share on   
+Read previous post:
+Managing Your Firewall on Centos 7 with Firewalld
+
+ 
+Read next post:
+Everything You Need to Know about ApsaraDB for MariaDB TX
+
+You may also like
+How to Install Cockpit on Ubuntu 18.04
+Alibaba Clouder - September 28, 2018
+
+ Getting Started with Kubernetes | Pods and Container Design Modes
+Alibaba Developer - March 31, 2020
+
+ How to Use Journalctl to Consult Server Logs
+Alibaba Clouder - October 2, 2018
+
+ Running Your Node.js Application on ECS with Systemd or Forever
+Alibaba Clouder - June 5, 2019
+
+ Using Prometheus and Blackbox Exporter to Monitor Services on Alibaba Cloud
+Alibaba Clouder - May 20, 2020
+
+ Managing Your Firewall on Centos 7 with Firewalld
+Alibaba Clouder - March 7, 2019
+
+Comments
+Write your comment...
+ 
+Alibaba Clouder
+2,605 posts | 742 followers
+
+Follow
+Related Products
+ ECS(Elastic Compute Service)
+Elastic and secure virtual cloud servers to cater all your cloud hosting needs.
+
+ VPC
+A virtual private cloud service that provides an isolated cloud network to operate resources in a secure environment.
+
+ CloudMonitor
+Automate performance monitoring of all your web resources and applications in real-time
+
+More Posts by Alibaba ClouderSee All 
+MyBatis with a More Fluent Experience
+Alibaba Cloud Sustainability Report 2021
+Comparing CNI Models in Container Service for Kubernetes — Alibaba Cloud Series Part 1
+[Infographic] 5 Steps to Accelerate Your Digitalization in Asia
+Attackers Use the Vulnerability of ShowDoc to Spread Botnets
+Powerful: MyBatis and Three Streaming Query Methods
+What is the Difference between Spring Boot and Spring?
+What are the Differences and Functions of the Redo Log, Undo Log, and Binlog in MySQL?
+On the In-Depth Cluster Scheduling and Management
+Alibaba Technological Practices: Experiences in Cloud Resource Scheduling
+A Free Trial That Lets You Build Big!
+Start building with 50+ products and up to 12 months usage for Elastic Compute Service
+
+About Us Privacy Policy Legal Notice List
+Alibaba Group Taobao Marketplace Tmall Juhuasuan AliExpress Alibaba.com 1688 Alimama Alitrip YunOS AutoNavi UCWeb Umeng Xiami DingTalk Alipay
+© 2009-2024 Copyright by Alibaba Cloud All rights reserved
+TRUSTe TRUSTe 
+phone
+alicare

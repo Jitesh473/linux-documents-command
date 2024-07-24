@@ -1,0 +1,44 @@
+
+bash
+Copy code
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.backup
+Or if you have a specific configuration file for your domain, replace default with your domain configuration file name.
+
+Edit Configuration: Open the Nginx configuration file for your domain using a text editor like nano or vi.
+
+bash
+Copy code
+sudo nano /etc/nginx/sites-available/default
+Update the Server Name: Locate the server_name directive in the configuration file. Change the domain name to your new domain.
+
+nginx
+Copy code
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name newdomain.com www.newdomain.com;
+
+    # other configurations...
+}
+Save and Close: Save the changes and close the editor.
+
+For nano: Press CTRL + X, then press Y, and then press Enter.
+For vi: Press Esc, type :wq, and then press Enter.
+Test Configuration: Before reloading Nginx, it's a good practice to test the configuration for syntax errors:
+
+bash
+Copy code
+sudo nginx -t
+If everything is okay, you should see: syntax is okay and test is successful.
+
+Reload Nginx: Apply the changes by reloading or restarting the Nginx server.
+
+bash
+Copy code
+sudo systemctl reload nginx
+Update DNS Records: Don't forget to update your DNS records for the new domain to point to the IP address of your server. This is done at your domain registrar or DNS provider where you manage your domain.
+
+SSL/TLS Certificates: If you're using SSL/TLS certificates (e.g., Let's Encrypt), ensure that you update them for the new domain or subdomains. You may need to obtain new certificates or update the existing ones depending on your setup.
+
+By following these steps, you should be able to change the domain associate

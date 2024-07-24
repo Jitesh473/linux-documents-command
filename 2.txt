@@ -1,0 +1,19 @@
+98  ll
+  499  cd /var/www//html
+  500  hi bro
+  501  cc
+  502  cd
+  503  ll
+  504  history
+  505  sudo su
+  506  sudo systemctl status nginx
+  507  sudo su
+  508  sudo systemctl status apache2
+  509  sudo systemctl status nginx
+  510  cd /var/www/html
+  511  sudo mv index.html index.html.backuo
+  512  sudo nano index.html
+  513  ifonfig
+  514  exit
+  515  sudo nano index.html
+

@@ -1,0 +1,13 @@
+Server                                     city                                        IP                   Cost
+voix-separator2                          Frankfurt                                 185.226.172.147         34.99992
+voix-separator                           Frankfurt                                 185.226.172.48          55.00008
+as7860011-mumbai-in-op1                  Mumbai                                    103.97.203.131          30.00024
+AutoScaleCloneSourceSG                   Singapore                                 139.99.55.158           14.99976	
+PAR-399982.op-net.com                    Paris                                     51.158.55.65    
+as7860019-ca-mon-op1	                 Montreal                                  45.154.204.147          34.99992
+CHI-385408.op-net.com                    Chicago                                   66.23.207.18
+as7860012-saopaulo-br-op1                Sao Paulo                                 185.192.124.86          30.00024
+as7860013-ld-uk-op1                      London                                    45.154.205.175          34.99992
+as7860015-syd-au-op1                     Sydney                                    51.161.203.88           14.99976
+as7860014-de-ddf-op1                     Dusseldorf                                213.202.219.141         34.99992
+as7860016-sg-sg-op1                      singapore                                 15.235.155.148          30.00024

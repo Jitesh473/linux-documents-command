@@ -1,0 +1,13 @@
+696  sudo apt update
+  697  sudo apt install ufw
+  698  sudo ufw enable
+  699  sudo ufw allow ssh
+  700  sudo ufw allow http
+  701  sudo ufw allow https
+  702  sudo ufw allow 1234/tcp
+  703  sudo ufw allow incoming
+  704  sudo ufw deny outgoing
+  705  sudo ufw check status verbose
+  706  sudon ufw disable
+  707  sudo ufw disable
+  708  history

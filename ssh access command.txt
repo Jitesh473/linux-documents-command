@@ -1,0 +1,8 @@
+sudo apt update
+sudo apt install openssh-server
+sudo systemctl enable ssh
+sudo systemctl start ssh
+Once SSH is enabled, you can access the Ubuntu machine from another computer using the following command:
+bash
+Copy code
+ssh username@ubuntu_machine_ip_address

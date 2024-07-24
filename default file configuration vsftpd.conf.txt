@@ -1,0 +1,14 @@
+vsftpd default file configuratio:-
+write_enable = yes
+chroot_local_user = yes
+
+self written:-
+user_sub_token =$USER
+local_root = /home/$USER/ftp
+pasv_min_port = 10000
+pasv_max_port=10100
+
+
+
+sudo adduser keshav
+mkdir /home/keshav/ftp

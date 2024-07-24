@@ -1,0 +1,313 @@
+Skip to main content
+Products
+Enterprise
+Developer
+Community
+Download
+Discourse
+Skip to main content
+Ubuntu Community Hub
+Install and Configure Samba
+Tutorials
+
+Log In
+​
+
+artwork by @hiking93
+Welcome to the Ubuntu Community Discourse, where all contributors (volunteers and Canonicalers) can coordinate their contributions to Ubuntu and closely related products. We’d love for you to introduce yourself!
+Who is this forum for? It’s for anyone working on any part of Ubuntu (and in some cases, making things for Ubuntu and on Ubuntu). This includes things like Documentation, QA, and Translations. This also includes discussing new ways to contribute! Feel free to talk about Ubuntu itself and other closely related topics. And we always welcome your site feedback.
+
+However, this site is NOT for technical support.
+(Use IRC, Ubuntu Forums, or askubuntu.com for support questions.)
+
+Install and Configure Samba
+Tutorials
+
+system
+
+3
+Aug '21
+Key	Value
+Summary	Install and configure Samba to share files across a network.
+Categories	server
+Difficulty	1
+Author	Aden Padilla adenpadilla@gmail.com
+Overview
+Duration: 1:00
+
+A Samba file server enables file sharing across different operating systems over a network. It lets you access your desktop files from a laptop and share files with Windows and macOS users.
+
+This guide covers the installation and configuration of Samba on Ubuntu.
+
+What you’ll learn
+How to set up a Samba file server
+How to share files across a local network
+What you’ll need
+Ubuntu 16.04 LTS
+A Local Area Network (LAN) to share files over
+If you have everything ready, let’s dive straight into the installation process on the next step!
+
+Originally authored by Aden Padilla.
+
+Installing Samba
+Duration: 1:00
+
+To install Samba, we run:
+
+sudo apt update
+sudo apt install samba
+We can check if the installation was successful by running:
+
+whereis samba
+The following should be its output:
+
+samba: /usr/sbin/samba /usr/lib/samba /etc/samba /usr/share/samba /usr/share/man/man7/samba.7.gz /usr/share/man/man8/samba.8.gz
+Setting up Samba
+Duration: 2:00
+
+Now that Samba is installed, we need to create a directory for it to share:
+
+mkdir /home/<username>/sambashare/
+The command above creates a new folder sambashare in our home directory which we will share later.
+
+The configuration file for Samba is located at /etc/samba/smb.conf. To add the new directory as a share, we edit the file by running:
+
+sudo nano /etc/samba/smb.conf
+At the bottom of the file, add the following lines:
+
+[sambashare]
+    comment = Samba on Ubuntu
+    path = /home/username/sambashare
+    read only = no
+    browsable = yes
+Then press Ctrl-O to save and Ctrl-X to exit from the nano text editor.
+
+What we’ve just added
+comment: A brief description of the share.
+path: The directory of our share.
+
+read only: Permission to modify the contents of the share folder is only granted when the value of this directive is no.
+
+browsable: When set to yes, file managers such as Ubuntu’s default file manager will list this share under “Network” (it could also appear as browseable).
+
+Now that we have our new share configured, save it and restart Samba for it to take effect:
+
+sudo service smbd restart
+Update the firewall rules to allow Samba traffic:
+
+sudo ufw allow samba
+Setting up User Accounts and Connecting to Share
+Duration: 1:00
+
+Since Samba doesn’t use the system account password, we need to set up a Samba password for our user account:
+
+sudo smbpasswd -a username
+ⓘ Note
+Username used must belong to a system account, else it won’t save.
+
+Connecting to Share
+On Ubuntu: Open up the default file manager and click Connect to Server then enter: ubuntuctn
+
+On macOS: In the Finder menu, click Go > Connect to Server then enter: macosctn
+
+On Windows, open up File Manager and edit the file path to:
+
+\\ip-address\sambashare
+Note: ip-address is the Samba server IP address and sambashare is the name of the share.
+
+You’ll be prompted for your credentials. Enter them to connect! Samba
+
+If you’d like to take your configuration further…
+Samba Server Guide 303
+1
+
+
+
+created
+Jan '20
+last reply
+Nov '23
+11
+replies
+23.8k
+views
+11
+users
+4
+likes
+2
+links
+
+5 MONTHS LATER
+
+duncancosser
+Jun '20
+Please include the following
+
+sudo smbpasswd -e username
+after the line
+
+sudo smbpasswd -a username
+Reason: the -e command ENABLES the user (followed tutorial and it didn’t work without that in Ubuntu 20.04 LTS.
+
+1 Reply
+1
+
+
+8 DAYS LATER
+
+zeekstern
+Jun '20
+Please change the following as the first change to the /etc/samba/smb.conf file. It should appear before the addition of the sambashare lines.
+
+In the Share Definitions section under the [homes] section:
+
+read only = no
+create mask = 0775
+directory mask = 0775
+
+The above changes are required to allow Win 10 to write to the share.
+
+
+
+3 MONTHS LATER
+
+fex
+Aug '20
+[sambashare] 
+   comment = Samba on Ubuntu 
+   path = /home/username/sambashare
+   read only = no 
+   browsable = yes
+That’s probably a typo and should be browseable, at least that’s how it’s written in the example:
+
+[printers]
+   comment = All Printers
+   browseable = no
+   path = /var/spool/samba
+   printable = yes
+   guest ok = no
+   read only = yes
+   create mask = 0700
+``
+
+
+5 MONTHS LATER
+
+SPLIT THIS TOPIC ON JAN 11, '21
+
+A post was split to a new topic: Samba Setup
+
+9 MONTHS LATER
+
+rthawkcom
+Oct '21
+The provided Samba configuration is outdated and incorrect. Many new changes have been made which makes those setting invalid. Here are the correct settings (works with Windows):
+
+[ Movies]
+comment = Movies on Red Tail
+path = /mnt/share/movies
+read only = no
+browsable = yes
+public = yes
+force user = root
+write list = root
+create mask = 0775
+directory mask = 0775
+acl allow execute always = True
+
+1
+
+
+21 DAYS LATER
+
+harshdangi
+Nov '21
+In config file we have this line
+
+[sambashare]
+I think for a newbies, we should also write why we wrote this particular line.
+
+1
+
+
+7 MONTHS LATER
+
+sadoskik
+Jun '22
+Agreed. Also if it could be a different name from the directory being shared, that would be helpful for newer users. I ran into a problem where it wasn’t obvious whether the share name (\ip[this part here) came from the directory’s name or the [sambashare] part. This was only relevant because I was trying to share a folder that wasn’t named ‘sambashare’.
+
+
+
+2 MONTHS LATER
+8 MONTHS LATER
+
+jimavera
+Mar '23
+I’d like to suggest telling people they will need wsdd if they want their Linux Samba shares to be visible on Windows. I know wsdd is not part of the Samba project but it (or an equivalent) is essential for most users and not telling them up-front to install it just leads to frustration and unnecessary help requests about “Samba doesn’t work with Windows clients” etc.
+
+sudo apt install wsdd is sufficient for most users on a local network (by default wsdd listens on all interfaces, but can be configured via /etc/default/wsdd).
+
+
+
+3 MONTHS LATER
+
+s-b-6
+Jun '23
+I suggest to extend the Note in section “Connecting to Share”:
+Note: ip-address is the Samba server IP address or ‘your-computers-name.local’ in a local area network (or for a virtual machine on the same computer). sambashare is the name of the share.
+
+
+
+5 MONTHS LATER
+
+deathstalkr
+
+duncancosser
+Nov '23
+Agreed. I struggled with it until I found that the user account needs to be enabled first, from here: Samba/SambaServerGuide - Community Help Wiki 10
+
+I see this @duncancosser’s comment has been posted about 3 years back, but still the change hasn’t been added yet as of November 2023’
+
+Thanks
+
+
+
+
+Reply
+Suggested Topics
+Topic	Replies	Views	Activity
+Summarizing Security Status of Ubuntu Machines on Azure with Runbooks
+Tutorials
+cloud
+ubuntu-pro
+azure
+0	1.2k	Apr '23
+How to upgrade Ubuntu LTS to Ubuntu Pro on AWS using AWS License Manager
+Tutorials
+server
+ubuntu-pro
+aws
+2	7.7k	Sep '23
+Upgrade Ubuntu LTS to Ubuntu Pro in AWS at scale via python + boto3
+Tutorials
+server
+ubuntu-pro
+aws
+0	513	May '23
+Create an Ubuntu Pro worker node AMI for Amazon EKS
+Tutorials
+server
+ubuntu-pro
+aws
+eks
+0	550	Oct '23
+How to install ONLYOFFICE DocSpace Server on Ubuntu using Docker
+Tutorials
+server
+0	603	Aug '23
+Want to read more? Browse other topics in 
+Tutorials
+ or view latest topics.
+
+Share

@@ -1,0 +1,6 @@
+Field	Possible Values
+minute	0–59 or *
+hour	0–23 or *
+day_of_month	1–31 or *
+month	1–12 or JAN–DEC or *
+day_of_week	0–6 or SUN–SAT or *

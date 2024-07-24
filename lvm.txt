@@ -1,0 +1,13 @@
+fdisk -l
+pvcreate
+pvdisplay
+vgcreate
+vgextend
+vgdisplay
+lvcreate
+lvextedn
+lvdisplay
+lvs
+mount
+mkfs
+df -Th

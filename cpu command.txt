@@ -1,0 +1,76 @@
+
+Process Management and Monitoring Commands
+Managing and monitoring processes are essential tasks for system administrators and users to ensure optimal system performance, resource utilization, and stability. Understanding the available commands for process management and monitoring helps in troubleshooting issues, identifying resource-intensive tasks, and managing system resources effectively. Here's an overview of some essential commands related to process management and monitoring in Linux:
+
+1. Process Management Commands:
+ps (Process Status):
+
+Display information about active processes.
+bash
+Copy code
+ps aux  # Display all processes for all users with detailed information
+top:
+
+Display real-time system processes and resource utilization.
+bash
+Copy code
+top  # Display dynamic view of system processes and resource usage
+htop:
+
+Interactive process viewer with a colorful and user-friendly interface.
+bash
+Copy code
+htop  # Launch interactive process viewer
+kill:
+
+Terminate a process by sending a signal.
+bash
+Copy code
+kill <PID>  # Terminate process by Process ID (PID)
+kill -9 <PID>  # Forcefully terminate process by PID
+pkill and pgrep:
+
+Find or signal processes based on name or other attributes.
+bash
+Copy code
+pkill -f <process_name>  # Terminate processes based on name pattern
+pgrep <process_name>  # List PIDs of processes based on name pattern
+nice and renice:
+
+Set or modify process priority (niceness).
+bash
+Copy code
+nice -n <value> <command>  # Run command with a specific niceness value
+renice <value> <PID>  # Change niceness value of a running process
+2. Process Monitoring and Analysis:
+vmstat:
+
+Report information about system processes, memory, paging, block IO, traps, and CPU activity.
+bash
+Copy code
+vmstat 1  # Display system statistics every 1 second
+iostat:
+
+Report CPU and input/output statistics for devices and partitions.
+bash
+Copy code
+iostat -x  # Display extended statistics for devices
+sar:
+
+Collect, report, and save system activity information.
+bash
+Copy code
+sar -u 1 5  # Report CPU activity every 1 second, 5 times
+strace:
+
+Trace system calls and signals for a running process to debug issues.
+bash
+Copy code
+strace -p <PID>  # Trace system calls for a specific process by PID
+lsof:
+
+List open files and the processes that opened them, useful for identifying processes holding onto deleted files.
+bash
+Copy code
+lsof -i  # List processes using internet sockets
+Conclusion:

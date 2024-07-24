@@ -1,0 +1,3 @@
+soft link 
+link create command = ln -s
+check command = ls -ltr

@@ -1,0 +1,1 @@
+sudo chown [new_owner]:[new_group] filename_or_directory

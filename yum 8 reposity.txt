@@ -1,0 +1,17 @@
+  1  df -
+    2  df -h
+    3  mount /dev/sr0 /opt
+    4  df -h
+    5  cd /etc/yum.repos.d/
+    6  ll
+    7  cat redhat.repo
+    8  nano rhel8.repo
+    9  dnf clean all
+   10  dnf repolist
+   11  nano /etc/yum/pluginconf.d/subscription-manager.conf
+   12  yum install vsftb
+   13  yum install vsftpd
+   14  cat /etc/mtab
+   15  nano /etc/fstb
+   16  sudo yum reboot
+   17  history
